@@ -19,13 +19,11 @@ public class Reader {
 
         for (String s: strings) {
             String phoneNumber = Getter.getPhoneNumber(s);
-            System.out.println("phoneNumber = " + phoneNumber);
             String mail = Getter.getMail(s);
-            System.out.println("mail = " + mail);
             String docNumber = Getter.getDocNumber(s);
-            System.out.println("documentNumber = " + docNumber);
             if (phoneNumber.isEmpty() && mail.isEmpty() && docNumber.isEmpty()) {
                 Directory.invalidFile++;
+                map.put(fileName, new Document("", "", ""));
             } else if (!phoneNumber.isEmpty() && !mail.isEmpty() && !docNumber.isEmpty()) {
                 map.put(fileName, new Document(phoneNumber, mail, docNumber));
             } else if (!phoneNumber.isEmpty() && !mail.isEmpty() && docNumber.isEmpty()){
