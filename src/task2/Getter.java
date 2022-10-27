@@ -10,9 +10,10 @@ public class Getter {
 
 
     public static String getPhoneNumber(String file){
-        Pattern pattern = Pattern.compile("\\+?\\(?33\\)?[0-9]{7}");
-        Matcher matcher = pattern.matcher(file);
-        String phoneNumber = "";
+
+        Pattern phoneNumberPattern = Pattern.compile("\\+?\\(?33\\)?[0-9]{7}");
+        Matcher matcher = phoneNumberPattern.matcher(file);
+        String phoneNumber = null;
 
         while(matcher.find()){
             phoneNumber = getInfo(matcher.group());
@@ -26,7 +27,7 @@ public class Getter {
         Pattern pattern = Pattern.compile("\\w+\\d+@mail.ru");
         Matcher matcher = pattern.matcher(file);
 
-        String mail = "";
+        String mail = null;
 
         while(matcher.find()){
             mail = getInfo(matcher.group());
@@ -40,7 +41,7 @@ public class Getter {
         Pattern pattern = Pattern.compile("[0-9][0-9][0-9][0-9]-([a-z][a-z][a-z][a-z]|[A-Z][A-Z][A-Z][A-Z])-[0-9][0-9][0-9][0-9]-([0-9][a-z][0-9][a-z]|[0-9][A-Z][0-9][A-Z])");
         Matcher matcher = pattern.matcher(file);
 
-        String docNumber = "";
+        String docNumber = null;
 
         while(matcher.find()) {
             docNumber = getInfo(matcher.group());
@@ -50,7 +51,7 @@ public class Getter {
     }
 
     public static String getInfo(String e){
-        String info = "";
+        String info = null;
         List <String> list = new ArrayList<>();
         list.add(e);
 

@@ -6,20 +6,30 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Scanner;
 
 public class Directory {
-    private static int fileNumber = 0;
 
+    public static int fileNumber = 0;
     public static int invalidFile = 0;
-    public static void findFile(File dir) throws NullPointerException {
+
+    static int filesNumber = new Scanner(System.in).nextInt();
+    static int check = 0;
+    public static void findFile(File dir) {
+
 
         try {
+
 
             File[] dirlist = dir.listFiles();
 
             for (int i = 0; i < dirlist.length; i++) {
-                System.out.println(dirlist[i].getName());
                 if (dirlist[i].isFile()) {
+                    if (check < filesNumber) {
+                        check++;
+                    } else {
+                        break;
+                    }
                     fileNumber++;
                     System.out.println("Файл " + dirlist[i].getName() + " директории " + dir.getName());
                     if (dirlist[i].length() == 0) {
@@ -27,7 +37,7 @@ public class Directory {
                         invalidFile++;
                     } else {
                         System.out.println("В файле есть данные");
-                        Reader.readSmallFile(dirlist[i].getAbsolutePath());
+                        Reader.readSmallFile(dirlist[i].getName(), dirlist[i].getAbsolutePath());
                     }
                 }
                 if (dirlist[i].isDirectory()) {

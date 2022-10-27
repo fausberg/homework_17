@@ -10,10 +10,10 @@ import java.util.Map;
 
 public class Reader {
 
-    private static Map<String, Document> map = new HashMap<>();
+    private static Map<String, Document> documentsInfo = new HashMap<>();
 
-    public static void readSmallFile(String fileName) throws IOException {
-        Path path = Paths.get(fileName);
+    public static void readSmallFile(String fileName, String absolutePath) throws IOException {
+        Path path = Paths.get(absolutePath);
 
         List<String> strings = Files.readAllLines(path);
 
@@ -21,29 +21,11 @@ public class Reader {
             String phoneNumber = Getter.getPhoneNumber(s);
             String mail = Getter.getMail(s);
             String docNumber = Getter.getDocNumber(s);
-            if (phoneNumber.isEmpty() && mail.isEmpty() && docNumber.isEmpty()) {
+            if (phoneNumber == null && mail == null && docNumber == null) {
                 Directory.invalidFile++;
-                map.put(fileName, new Document("", "", ""));
-            } else if (!phoneNumber.isEmpty() && !mail.isEmpty() && !docNumber.isEmpty()) {
-                map.put(fileName, new Document(phoneNumber, mail, docNumber));
-            } else if (!phoneNumber.isEmpty() && !mail.isEmpty() && docNumber.isEmpty()){
-                map.put(fileName, new Document(phoneNumber, mail, ""));
-            } else if (!phoneNumber.isEmpty() && mail.isEmpty() && docNumber.isEmpty()){
-                map.put(fileName, new Document(phoneNumber, "", ""));
-            } else if (phoneNumber.isEmpty() && !mail.isEmpty() && !docNumber.isEmpty()){
-                map.put(fileName, new Document("", mail, docNumber));
-            } else if (phoneNumber.isEmpty() && mail.isEmpty() && !docNumber.isEmpty()){
-                map.put(fileName, new Document("", "", docNumber));
-            } else if (phoneNumber.isEmpty() && !mail.isEmpty() && docNumber.isEmpty()){
-                map.put(fileName, new Document("", mail, ""));
-            } else if (!phoneNumber.isEmpty() && mail.isEmpty() && !docNumber.isEmpty()){
-                map.put(fileName, new Document(phoneNumber, "", docNumber));
+            } else {
+                documentsInfo.put(fileName, new Document(phoneNumber, docNumber, mail));
             }
         }
-
-    }
-
-    public static void vyvod(){
-        System.out.println(map);
     }
 }
